@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Done_GameController : MonoBehaviour
 {
     public Animator animator;
+   public Animator animator2;
     public GameObject[] hazards;
     public Vector3 spawnValues;
     public int hazardCount;
@@ -53,6 +54,7 @@ public class Done_GameController : MonoBehaviour
             for (int i = 0; i < hazardCount; i++)
             {
                 animator.SetInteger("spawn_loop_counter", i);
+               animator2.SetInteger("Spawn_loop_counter2", i);
                 GameObject hazard = hazards[Random.Range(0, hazards.Length)];
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
