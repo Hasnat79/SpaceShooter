@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 
 public class Done_GameController : MonoBehaviour
@@ -36,9 +37,14 @@ public class Done_GameController : MonoBehaviour
     private bool restart;
     public Text scoreText;
     private int score;
-    
+    //pause menu UI
+    public GameObject pauseMenuUI;
+    //menu UI
+    public GameObject menuUI;
+    private bool sound;
     void Start()
     {
+        sound = true;
         //gameOver_boolean = false;
         level = 1;
         gameOver = false;
@@ -85,6 +91,7 @@ public class Done_GameController : MonoBehaviour
                     restartButton.SetActive(true);
                     restart = true;
                     highestScoreText.text = "HIGH SCORE \n"+PlayerPrefs.GetInt("highestScore",0).ToString();//Don't forget to reset by button or anything :3
+                    
                     break;
                 }
             }
@@ -124,5 +131,56 @@ public class Done_GameController : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    //pause menu functions
+    public void pauseButtonPressed()
+    {
+        Time.timeScale = 0f;
+        if (!sound)
+        {
+           AudioListener.volume=0f;
+        }
+        else
+        {
+            AudioListener.volume = 0.5f;
+        }
+        
+        pauseMenuUI.SetActive(true);
+    }
+    public void resume()
+    {
+        pauseMenuUI.SetActive(false);
+        if (sound)
+        {
+            AudioListener.volume = 1f;
+        }
+        Time.timeScale = 1f;
+    }
+
+    public void QuitGame()
+    {
+        
+        Application.Quit();
+
+    }
+
+    //menu button functions
+    public void menuButtonPressed()
+    {
+        menuUI.SetActive(true);
+    }
+    public void soundOff()
+    {
+        AudioListener.volume = 0f;
+        sound = false;
+        menuUI.SetActive(false);
+    }
+    public void soundOn()
+    {
+        AudioListener.volume =  1f;
+        sound = true;
+        pauseButtonPressed();
+        menuUI.SetActive(false);
     }
 }
