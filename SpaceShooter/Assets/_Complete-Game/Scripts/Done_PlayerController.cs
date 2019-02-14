@@ -33,9 +33,11 @@ public class Done_PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         //	float moveHorizontal = Input.GetAxis ("Horizontal");
         //float moveVertical = Input.GetAxis ("Vertical");
         Vector2 direction = touchPad.GetDirection();
+
         Vector3 movement = new Vector3(direction.x, 0.0f, direction.y);
         GetComponent<Rigidbody>().velocity = movement * speed;
 

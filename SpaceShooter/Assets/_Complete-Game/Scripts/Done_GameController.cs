@@ -23,7 +23,9 @@ public class Done_GameController : MonoBehaviour
     public float waveWait;
     //Adding Levels
     public Text levelText;
+    public Text highestLevel;
     private int level;
+
     //Adding Highest Score
     public Text highestScoreText;
     private int highestScore;
@@ -54,6 +56,7 @@ public class Done_GameController : MonoBehaviour
         //gameOverText.text = "";
         levelText.text = "Level " + level;
         highestScoreText.text = "";
+        highestLevel.text = "";
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
@@ -90,8 +93,8 @@ public class Done_GameController : MonoBehaviour
                     over_text_animator.SetBool("gameOver2",gameOver);
                     restartButton.SetActive(true);
                     restart = true;
-                    highestScoreText.text = "HIGH SCORE \n"+PlayerPrefs.GetInt("highestScore",0).ToString();//Don't forget to reset by button or anything :3
-                    
+                    highestScoreText.text = "HIGHEST SCORE \n"+PlayerPrefs.GetInt("highestScore",0).ToString();//Don't forget to reset by button or anything :3
+                    highestLevel.text = "HIGHEST LEVEL\n" + PlayerPrefs.GetInt("highestLevel", 1).ToString();
                     break;
                 }
             }
@@ -100,6 +103,9 @@ public class Done_GameController : MonoBehaviour
             {                            
                     hazardCount += 5;
                     level++;
+                    if(level > PlayerPrefs.GetInt("highestLevel",1)){
+                    PlayerPrefs.SetInt("highestLevel", level);
+                }
             }
             yield return new WaitForSeconds(waveWait);
           
@@ -182,5 +188,16 @@ public class Done_GameController : MonoBehaviour
         sound = true;
         pauseButtonPressed();
         menuUI.SetActive(false);
+    }
+    //reset button functions
+    public void reset_highscore_level()
+    {
+        
+        //PlayerPrefs.DeleteKey("highestScore");
+        // PlayerPrefs.DeleteKey("highestLevel");
+        PlayerPrefs.DeleteAll();
+        Time.timeScale = 1f;
+        pauseMenuUI.SetActive(false);
+        
     }
 }
