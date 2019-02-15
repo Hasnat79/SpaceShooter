@@ -11,14 +11,15 @@ public class SimpleTouchPad : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     private Vector2 smoothDirection;
     private bool touched;
     private int pointerID;
-
+    
+    
     //adding fire option into movement area
     private bool canfire;
 
     private void Awake()
     {
         direction = Vector2.zero;
-        touched =false;
+        touched = false;
 
     }
 
@@ -26,9 +27,9 @@ public class SimpleTouchPad : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     {
         if (!touched)
         {
+            Time.timeScale = 1f;
             touched = true;
             pointerID = data.pointerId;
-
             //Set out start point
             origin = data.position;
             canfire = true;
@@ -49,11 +50,16 @@ public class SimpleTouchPad : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
 
     public void OnPointerUp(PointerEventData data)
-    {   if (data.pointerId == pointerID)
+    {
+        
+        if (data.pointerId == pointerID)
         {
+            
+           
             direction = Vector2.zero;
             touched = false;
             canfire = false;
+            Time.timeScale = 0.199f;
         }
     }
     public Vector2 GetDirection()

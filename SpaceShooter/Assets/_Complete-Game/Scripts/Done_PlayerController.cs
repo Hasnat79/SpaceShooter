@@ -19,11 +19,12 @@ public class Done_PlayerController : MonoBehaviour
 
     private float nextFire;
     public SimpleTouchPad touchPad;
-    public SimpleTouchAreaButton areaButton;
+   // public SimpleTouchAreaButton areaButton;
+    
 
     void Update()
     {
-        if (areaButton.CanFire() && Time.time > nextFire)
+        if (touchPad.CanFire() && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
@@ -34,20 +35,20 @@ public class Done_PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        //	float moveHorizontal = Input.GetAxis ("Horizontal");
-        //float moveVertical = Input.GetAxis ("Vertical");
-        Vector2 direction = touchPad.GetDirection();
+        	//float moveHorizontal = Input.GetAxis ("Horizontal");
+            //float moveVertical = Input.GetAxis ("Vertical");
+            Vector2 direction = touchPad.GetDirection();
 
-        Vector3 movement = new Vector3(direction.x, 0.0f, direction.y);
-        GetComponent<Rigidbody>().velocity = movement * speed;
+            Vector3 movement = new Vector3(direction.x, 0.0f, direction.y);
+            GetComponent<Rigidbody>().velocity = movement * speed;
 
-        GetComponent<Rigidbody>().position = new Vector3
-        (
-            Mathf.Clamp(GetComponent<Rigidbody>().position.x, boundary.xMin, boundary.xMax),
-            0.0f,
-            Mathf.Clamp(GetComponent<Rigidbody>().position.z, boundary.zMin, boundary.zMax)
-        );
+             GetComponent<Rigidbody>().position = new Vector3
+            (
+                Mathf.Clamp(GetComponent<Rigidbody>().position.x, boundary.xMin, boundary.xMax),
+                0.0f,
+                Mathf.Clamp(GetComponent<Rigidbody>().position.z, boundary.zMin, boundary.zMax)
+            );
 
-        GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
+            GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
     }
 }

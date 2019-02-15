@@ -87,6 +87,7 @@ public class Done_GameController : MonoBehaviour
                 yield return new WaitForSeconds(spawnWait);
                 if (gameOver)
                 {
+                    
                     //  restartText.text = "Press 'R' for Restart";
                     //gameOver_boolean = true;
                     game_text_animator.SetBool("gameOver1", gameOver);
